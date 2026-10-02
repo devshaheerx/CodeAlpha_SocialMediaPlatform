@@ -1,43 +1,62 @@
+<div align="center">
+
 # Pulse — Mini Social Media Platform
 
-A full-stack social media app built with the **MERN stack** (MongoDB, Express, React, Node.js) as **Task 2** of the **CodeAlpha Full Stack Development Internship**.
+A full-stack social media app built with the **MERN stack** for **Task 2** of the **CodeAlpha Full Stack Development Internship**.
 
-Users can create profiles, share posts with images, like and comment on posts, follow other people, and get a personalized feed.
+Create a profile, share posts with images, like and comment, follow people, and get a personalized feed.
 
-**Live demo:** _add your Vercel link here_
-**Demo login:** `demo` / `password123` (after running the seed script)
+**[Live Demo](#)** · **[Report a Bug](../../issues)**
+
+</div>
 
 ---
 
-## Screenshots
+## Table of Contents
 
-_Add screenshots here: Feed, Profile, Post detail, Mobile + dark mode_
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Database Design](#database-design)
+- [API Endpoints](#api-endpoints)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Deployment](#deployment)
+- [Author](#author)
 
 ---
 
 ## Features
 
 ### Core requirements (CodeAlpha Task 2)
-- **User profiles** — avatar, name, @username, bio, join date, follower/following counts, user's posts, edit profile
-- **Posts** — create text and/or image posts, view, edit and delete your own posts
-- **Comments** — comment on any post; delete your own comments (post owners can moderate comments on their posts)
-- **Like system** — like/unlike toggle with live counts
-- **Follow system** — follow/unfollow users, followers and following lists
-- **Personalized feed** — posts from people you follow plus your own
-- **Database** — MongoDB collections for users, posts, comments and followers
 
-### Extra features
-- Secure JWT authentication in httpOnly cookies, bcrypt password hashing
-- Image uploads to Cloudinary (posts and avatars)
-- Notifications for likes, comments and follows, with unread badge
-- User search
-- "Who to follow" suggestions (MongoDB aggregation pipeline)
-- Explore page with posts from everyone
-- Optimistic UI updates for likes and follows
-- Pagination ("Load more")
-- Dark / light mode
-- Fully responsive, tested from 320px phones to 1920px monitors: bottom tab bar on phones, icon sidebar on tablets/laptops, full sidebar + "Who to follow" panel on desktops
-- Input validation, rate limiting, Helmet security headers
+| Requirement | Implementation |
+|---|---|
+| **User profiles** | Avatar, name, @username, bio, join date, follower/following counts, user's posts, edit profile with photo upload |
+| **Posts** | Create text and/or image posts; view, edit and delete your own posts |
+| **Comments** | Comment on any post; delete your own comments; post owners can moderate comments on their posts |
+| **Like system** | Like/unlike toggle with live counts (no double-counting) |
+| **Follow system** | Follow/unfollow users, followers and following lists |
+| **Personalized feed** | Shows posts from people you follow plus your own, newest first |
+| **Database** | MongoDB stores users, posts, comments, followers and notifications |
+
+### Additional features
+
+- **Authentication**: JWT stored in httpOnly cookies, bcrypt password hashing, login with email or username, session persists on refresh
+- **Image uploads**: posts and avatars stored on Cloudinary (JPG/PNG/WEBP/GIF, max 2 MB)
+- **Notifications**: alerts for likes, comments and new followers, with an unread badge
+- **Search**: find people by name or username
+- **Who to follow**: suggestions ranked by follower count
+- **Explore page**: discover posts from everyone
+- **In-app confirmations**: delete confirmations and status messages appear as notifications at the top of the screen (no browser pop-ups)
+- **Optimistic UI**: likes and follows update instantly and roll back if the request fails
+- **Pagination**: "Load more" on every post list
+- **Dark/light mode**: follows system preference and remembers your choice
+- **Fully responsive**: tested from 320px phones to 1920px monitors
+  - Phones: top bar + bottom tab bar
+  - Tablets & laptops: compact icon sidebar
+  - Desktops: full sidebar + "Who to follow" panel
+- **Security**: Helmet headers, CORS restricted to the frontend URL, rate limiting on auth routes, input validation, ownership checks on every edit/delete
 
 ---
 
@@ -45,10 +64,10 @@ _Add screenshots here: Feed, Profile, Post detail, Mobile + dark mode_
 
 | Layer | Technologies |
 |---|---|
-| Frontend | React 19, Vite, React Router 7, Tailwind CSS v4, Axios, Context API, lucide-react, react-hot-toast |
-| Backend | Node.js, Express, Mongoose, JWT, bcrypt, Multer, Cloudinary, express-validator, Helmet, express-rate-limit |
-| Database | MongoDB Atlas |
-| Deployment | Vercel (frontend and backend as separate projects) |
+| **Frontend** | React 19, Vite, React Router 7, Tailwind CSS v4, Axios, Context API, lucide-react, react-hot-toast |
+| **Backend** | Node.js, Express, Mongoose, JSON Web Token, bcrypt, Multer 2, Cloudinary, express-validator, Helmet, express-rate-limit |
+| **Database** | MongoDB Atlas |
+| **Deployment** | Vercel (frontend and backend as separate projects) |
 
 ---
 
@@ -57,111 +76,181 @@ _Add screenshots here: Feed, Profile, Post detail, Mobile + dark mode_
 ```
 CodeAlpha_SocialMediaPlatform/
 ├── backend/
-│   ├── config/         # MongoDB + Cloudinary setup
-│   ├── controllers/    # auth, users, posts, comments, notifications
-│   ├── middleware/     # auth guard, upload, validation, error handler
-│   ├── models/         # User, Post, Comment, Notification
-│   ├── routes/
-│   ├── utils/          # token helper, async wrapper, seed script
-│   └── server.js
+│   ├── config/          # MongoDB connection, Cloudinary setup
+│   ├── controllers/     # auth, users, posts, comments, notifications
+│   ├── middleware/      # auth guard, file upload, validation, error handler
+│   ├── models/          # User, Post, Comment, Notification
+│   ├── routes/          # Express routers
+│   ├── utils/           # JWT helper, async wrapper, seed script
+│   ├── server.js
+│   └── vercel.json
+│
 └── frontend/
+    ├── public/
     └── src/
-        ├── api/        # axios instance
-        ├── components/ # PostCard, CreatePost, CommentSection, FollowButton, Layout, ...
-        ├── context/    # AuthContext, ThemeContext
-        ├── hooks/      # usePosts (pagination)
-        ├── pages/      # Feed, Explore, Profile, PostDetail, Notifications, ...
-        └── utils/
+        ├── api/         # Axios instance
+        ├── components/  # PostCard, CreatePost, CommentSection, FollowButton, Layout, ...
+        ├── context/     # AuthContext, ThemeContext
+        ├── hooks/       # usePosts (pagination)
+        ├── pages/       # Feed, Explore, Profile, EditProfile, PostDetail, Notifications, ...
+        ├── utils/       # date formatting, confirmation toast
+        ├── App.jsx
+        └── main.jsx
 ```
+
+---
+
+## Database Design
+
+| Collection | Key fields |
+|---|---|
+| **users** | `username` (unique), `name`, `email` (unique), `password` (hashed), `avatar`, `bio`, `followers[]`, `following[]` |
+| **posts** | `author → User`, `text`, `image`, `likes[] → User`, `commentsCount`, `edited` |
+| **comments** | `post → Post`, `author → User`, `text` |
+| **notifications** | `recipient → User`, `sender → User`, `type` (like / comment / follow), `post → Post`, `read` |
+
+Followers are stored as arrays of user IDs on both users, so follow/unfollow uses `$addToSet` / `$pull`. Deleting a post also removes its comments, related notifications and its Cloudinary image.
 
 ---
 
 ## API Endpoints
 
-🔒 = requires authentication
+Base URL: `/api` · 🔒 = requires login
 
+### Auth
 | Method | Endpoint | Description |
 |---|---|---|
-| POST | `/api/auth/register` | Register |
-| POST | `/api/auth/login` | Log in (email or username) |
-| POST | `/api/auth/logout` | Log out |
-| GET 🔒 | `/api/auth/me` | Current user |
-| GET 🔒 | `/api/users/:username` | Get profile |
-| PUT 🔒 | `/api/users/me` | Update profile (multipart: name, bio, avatar) |
-| POST 🔒 | `/api/users/:id/follow` | Follow / unfollow (toggle) |
-| GET 🔒 | `/api/users/:id/followers` | Followers list |
-| GET 🔒 | `/api/users/:id/following` | Following list |
-| GET 🔒 | `/api/users/search?q=` | Search users |
-| GET 🔒 | `/api/users/suggestions` | Who to follow |
-| GET 🔒 | `/api/posts/feed?page=` | Personalized feed |
-| GET 🔒 | `/api/posts/explore?page=` | All posts |
-| GET 🔒 | `/api/posts/user/:userId` | A user's posts |
-| GET 🔒 | `/api/posts/:id` | Single post |
-| POST 🔒 | `/api/posts` | Create post (multipart: text, image) |
-| PUT 🔒 | `/api/posts/:id` | Edit own post |
-| DELETE 🔒 | `/api/posts/:id` | Delete own post (+ its comments) |
-| POST 🔒 | `/api/posts/:id/like` | Like / unlike (toggle) |
-| GET 🔒 | `/api/posts/:id/comments` | Get comments |
-| POST 🔒 | `/api/posts/:id/comments` | Add comment |
-| DELETE 🔒 | `/api/comments/:id` | Delete comment |
-| GET 🔒 | `/api/notifications` | Notifications |
-| GET 🔒 | `/api/notifications/unread-count` | Unread count |
-| PUT 🔒 | `/api/notifications/read` | Mark all as read |
+| POST | `/auth/register` | Create an account |
+| POST | `/auth/login` | Log in with email or username |
+| POST | `/auth/logout` | Log out |
+| GET 🔒 | `/auth/me` | Get the current user |
+
+### Users
+| Method | Endpoint | Description |
+|---|---|---|
+| GET 🔒 | `/users/:username` | Get a profile |
+| PUT 🔒 | `/users/me` | Update profile (multipart: `name`, `bio`, `avatar`) |
+| POST 🔒 | `/users/:id/follow` | Follow / unfollow (toggle) |
+| GET 🔒 | `/users/:id/followers` | Followers list |
+| GET 🔒 | `/users/:id/following` | Following list |
+| GET 🔒 | `/users/search?q=` | Search users |
+| GET 🔒 | `/users/suggestions` | Who to follow |
+
+### Posts
+| Method | Endpoint | Description |
+|---|---|---|
+| GET 🔒 | `/posts/feed?page=` | Personalized feed |
+| GET 🔒 | `/posts/explore?page=` | All posts |
+| GET 🔒 | `/posts/user/:userId?page=` | A user's posts |
+| GET 🔒 | `/posts/:id` | Single post |
+| POST 🔒 | `/posts` | Create post (multipart: `text`, `image`) |
+| PUT 🔒 | `/posts/:id` | Edit own post |
+| DELETE 🔒 | `/posts/:id` | Delete own post |
+| POST 🔒 | `/posts/:id/like` | Like / unlike (toggle) |
+
+### Comments
+| Method | Endpoint | Description |
+|---|---|---|
+| GET 🔒 | `/posts/:id/comments` | Get comments |
+| POST 🔒 | `/posts/:id/comments` | Add a comment |
+| DELETE 🔒 | `/comments/:id` | Delete a comment (author or post owner) |
+
+### Notifications
+| Method | Endpoint | Description |
+|---|---|---|
+| GET 🔒 | `/notifications` | List notifications |
+| GET 🔒 | `/notifications/unread-count` | Unread count |
+| PUT 🔒 | `/notifications/read` | Mark all as read |
 
 ---
 
-## Run Locally
+## Getting Started
 
-**Prerequisites:** Node.js 18+, a MongoDB Atlas cluster (free tier works), and optionally a Cloudinary account for image uploads.
+### Prerequisites
+- Node.js 18 or newer
+- A [MongoDB Atlas](https://www.mongodb.com/atlas) cluster (free tier works)
+- A [Cloudinary](https://cloudinary.com) account for image uploads (free tier works)
 
-### 1. Backend
+### 1. Clone the repository
+```bash
+git clone https://github.com/devshaheerx/CodeAlpha_SocialMediaPlatform.git
+cd CodeAlpha_SocialMediaPlatform
+```
+
+### 2. Backend
 ```bash
 cd backend
 npm install
-cp .env.example .env      # then fill in your values
-npm run seed              # optional: demo users and posts
-npm run dev               # http://localhost:5000
+cp .env.example .env     # then fill in your values
+npm run seed             # optional: adds demo users and posts (clears existing data)
+npm run dev              # runs on http://localhost:5000
 ```
 
-### 2. Frontend
+### 3. Frontend (in a second terminal)
 ```bash
 cd frontend
 npm install
-cp .env.example .env      # VITE_API_URL=http://localhost:5000/api
-npm run dev               # http://localhost:5173
+cp .env.example .env     # VITE_API_URL=http://localhost:5000/api
+npm run dev              # runs on http://localhost:5173
 ```
 
-### Environment variables
+### Demo account
+After running the seed script, log in with:
+```
+Username: demo
+Password: password123
+```
 
-**backend/.env**
+---
+
+## Environment Variables
+
+### `backend/.env`
 | Variable | Description |
 |---|---|
+| `PORT` | Server port (default `5000`) |
 | `MONGO_URI` | MongoDB Atlas connection string |
-| `JWT_SECRET` | Long random string |
-| `JWT_EXPIRES_IN` | e.g. `7d` |
-| `CLIENT_URL` | Frontend URL (comma-separate multiple) |
+| `JWT_SECRET` | Long random string used to sign tokens |
+| `JWT_EXPIRES_IN` | Token lifetime, e.g. `7d` |
+| `CLIENT_URL` | Frontend URL (comma-separate multiple URLs) |
 | `NODE_ENV` | `development` or `production` |
-| `CLOUDINARY_CLOUD_NAME` / `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | Cloudinary credentials |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
 
-**frontend/.env**
+### `frontend/.env`
 | Variable | Description |
 |---|---|
 | `VITE_API_URL` | Backend URL ending in `/api` |
 
 ---
 
-## Deploy to Vercel
+## Deployment
 
-1. Push the repo to GitHub.
-2. **Backend:** import the repo in Vercel, set the root directory to `backend`, add all backend env vars (set `NODE_ENV=production` and `CLIENT_URL` to your frontend URL).
-3. **Frontend:** import the repo again, set the root directory to `frontend`, framework preset **Vite**, add `VITE_API_URL=https://<your-backend>.vercel.app/api`.
-4. In MongoDB Atlas → Network Access, allow `0.0.0.0/0` so Vercel can connect.
+Both apps deploy to **Vercel** as separate projects from the same repository.
+
+**Backend**
+1. Import the repo on Vercel and set **Root Directory** to `backend`.
+2. Add all backend environment variables. Set `NODE_ENV=production` and `CLIENT_URL` to your frontend URL.
+3. In MongoDB Atlas → **Network Access**, allow `0.0.0.0/0`.
+
+**Frontend**
+1. Import the repo again and set **Root Directory** to `frontend` (framework preset: **Vite**).
+2. Add `VITE_API_URL=https://<your-backend>.vercel.app/api`.
+3. After deploying, update the backend's `CLIENT_URL` to the frontend URL and redeploy the backend.
 
 ---
 
 ## Author
 
-**Syed Shaheer Ahmed** — Full-Stack Developer (MERN)
+**Syed Shaheer Ahmed**: Full-Stack Developer (MERN)
+
 [LinkedIn](https://linkedin.com/in/syedshaheerahmed) · [GitHub](https://github.com/devshaheerx)
 
-Built for the **CodeAlpha** Full Stack Development Internship.
+---
+
+<div align="center">
+
+Built as part of the **CodeAlpha Full Stack Development Internship**
+
+</div>
