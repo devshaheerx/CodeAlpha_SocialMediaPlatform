@@ -19,7 +19,6 @@ Create a profile, share posts with images, like and comment, follow people, and 
 - [API Endpoints](#api-endpoints)
 - [Getting Started](#getting-started)
 - [Environment Variables](#environment-variables)
-- [Deployment](#deployment)
 - [Author](#author)
 
 ---
@@ -65,7 +64,6 @@ Create a profile, share posts with images, like and comment, follow people, and 
 | **Frontend** | React 19, Vite, React Router 7, Tailwind CSS v4, Axios, Context API, lucide-react, react-hot-toast |
 | **Backend** | Node.js, Express, Mongoose, JSON Web Token, bcrypt, Multer 2, Cloudinary, express-validator, Helmet, express-rate-limit |
 | **Database** | MongoDB Atlas |
-| **Deployment** | Vercel (frontend and backend as separate projects) |
 
 ---
 
@@ -80,8 +78,7 @@ CodeAlpha_SocialMediaPlatform/
 │   ├── models/          # User, Post, Comment, Notification
 │   ├── routes/          # Express routers
 │   ├── utils/           # JWT helper, async wrapper, seed script
-│   ├── server.js
-│   └── vercel.json
+│   └── server.js
 │
 └── frontend/
     ├── public/
@@ -220,22 +217,6 @@ Password: password123
 | Variable | Description |
 |---|---|
 | `VITE_API_URL` | Backend URL ending in `/api` |
-
----
-
-## Deployment
-
-Both apps deploy to **Vercel** as separate projects from the same repository.
-
-**Backend**
-1. Import the repo on Vercel and set **Root Directory** to `backend`.
-2. Add all backend environment variables. Set `NODE_ENV=production` and `CLIENT_URL` to your frontend URL.
-3. In MongoDB Atlas → **Network Access**, allow `0.0.0.0/0`.
-
-**Frontend**
-1. Import the repo again and set **Root Directory** to `frontend` (framework preset: **Vite**).
-2. Add `VITE_API_URL=https://<your-backend>.vercel.app/api`.
-3. After deploying, update the backend's `CLIENT_URL` to the frontend URL and redeploy the backend.
 
 ---
 
