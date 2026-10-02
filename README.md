@@ -6,8 +6,6 @@ A full-stack social media app built with the **MERN stack** for **Task 2** of th
 
 Create a profile, share posts with images, like and comment, follow people, and get a personalized feed.
 
-**[Live Demo](#)** · **[Report a Bug](../../issues)**
-
 </div>
 
 ---
