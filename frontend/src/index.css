@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-brand-50: #fff1f3;
+  --color-brand-100: #ffe4e8;
+  --color-brand-400: #fb7185;
+  --color-brand-500: #f43f5e;
+  --color-brand-600: #e11d48;
+  --color-brand-700: #be123c;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+  }
+}
+
+/* Reusable component classes (Tailwind v4 uses @utility so they can be composed) */
+@utility card {
+  @apply rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900;
+}
+@utility btn {
+  @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-brand-500 text-white hover:bg-brand-600;
+}
+@utility btn-outline {
+  @apply btn border border-zinc-300 hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800;
+}
+@utility input {
+  @apply w-full rounded-xl border border-zinc-300 bg-white px-4 py-2.5 text-sm outline-none transition placeholder:text-zinc-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 dark:border-zinc-700 dark:bg-zinc-900;
+}
+@utility label {
+  @apply mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300;
+}
+@utility muted {
+  @apply text-zinc-500 dark:text-zinc-400;
+}

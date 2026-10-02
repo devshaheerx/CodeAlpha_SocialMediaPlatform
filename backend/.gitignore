@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment variables (secrets: MongoDB URI, JWT secret, Cloudinary keys)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Vercel
+.vercel/
+
+# Uploads / temp files (if ever saved locally)
+uploads/
+tmp/
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
