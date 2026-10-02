@@ -224,7 +224,7 @@ Password: password123
 
 **Syed Shaheer Ahmed**: Full-Stack Developer (MERN)
 
-[LinkedIn](https://linkedin.com/in/syedshaheerahmed) · [GitHub](https://github.com/devshaheerx)
+[LinkedIn](https://www.linkedin.com/in/syed-shaheer-ahmed-505a64332/) · [GitHub](https://github.com/devshaheerx)
 
 ---
 
